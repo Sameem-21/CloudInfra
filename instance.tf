@@ -1,0 +1,74 @@
+data "aws_ami" "ubuntu" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+  }
+
+
+
+  owners = ["099720109477"] # Canonical
+}
+
+resource "aws_instance" "test_app_instance" {
+  ami                         = data.aws_ami.ubuntu.id
+  instance_type               = "t3.micro"
+  key_name                    = "test_apsouth1"
+  subnet_id                   = aws_subnet.test_app_subnet.id
+  security_groups             = [aws_security_group.test_app_sg.id]
+  associate_public_ip_address = true
+#   user_data = <<EOF
+# #!/bin/bash
+# export DEBIAN_FRONTEND=noninteractive
+
+# # Update system
+# apt-get update -y
+# apt-get upgrade -y
+
+# # Install prerequisites
+# apt-get install -y curl gnupg apt-transport-https
+
+# # Add Microsoft repo
+# curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+# curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
+
+# # Install sqlcmd
+# apt-get update -y
+# ACCEPT_EULA=Y apt-get install -y mssql-tools unixodbc-dev
+
+# # Add sqlcmd to PATH
+# echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> /etc/profile
+# echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> /etc/bashrc
+# source /etc/profile
+# EOF
+
+
+
+
+  tags = {
+    Name = "WebServerInstance"
+  }
+  depends_on = [aws_security_group.test_app_sg]
+
+}
+
+resource "aws_instance" "test_db_instance" {
+  ami                         = data.aws_ami.ubuntu.id
+  instance_type               = "t3.micro"
+  key_name                    = "test_apsouth1"
+  subnet_id                   = aws_subnet.test_private_subnet.id
+  security_groups             = [aws_security_group.test_db_sg.id]
+  associate_public_ip_address = false
+
+  tags = {
+    Name = "DatabaseInstance"
+  }
+  depends_on = [aws_security_group.test_db_sg]
+
+}
+
+#outputs
+output "app_instance_id" {
+  value = aws_instance.test_app_instance.id
+}   
