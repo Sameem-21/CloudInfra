@@ -1,1 +1,14 @@
 name: cloud_infra_workflow
+on: 
+ push:
+  branches: main
+    
+
+jobs:
+  build:
+   runs-on: self-hosted
+   steps:
+    - name: checkout Code
+      uses: actions/checkout@v3
+
+      
