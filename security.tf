@@ -4,8 +4,8 @@ resource "aws_security_group" "test_app_sg" {
   description = "Security group for test application"
   vpc_id      = aws_vpc.test_app.id
   tags = {
-    name = "${aws_security_group.id}_test_app_sg"
-  }
+  Name = "${aws_vpc.test_app.tags["Name"]}-sg-test_app"
+}
 }
 resource "aws_security_group_rule" "allow_ssh" {
   type              = "ingress"
@@ -52,7 +52,7 @@ resource "aws_security_group" "test_db_sg" {
   vpc_id      = aws_vpc.test_app.id
 
   tags = {
-    name = "${aws_security_group.id}_test_db_sg"
+    name = "${aws_vpc.test_app.tags["Name"]}_test_db_sg"
   }
 }
 

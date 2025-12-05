@@ -17,7 +17,7 @@ resource "aws_subnet" "test_app_subnet" {
   availability_zone = "ap-south-1a"
 
   tags = {
-    Name="${aws_vpc.name}_public_subnet"
+    Name="${aws_vpc.test_app.tags["Name"]}_public_subnet"
   }
 }
 
@@ -28,7 +28,7 @@ resource "aws_subnet" "test_private_subnet" {
   availability_zone = "ap-south-1b"
 
   tags = {
-    Name="${aws_vpc.name}_private_subnet_1b"
+    Name="${aws_vpc.test_app.tags["Name"]}_private_subnet_1b"
   }
 }
 
@@ -38,7 +38,7 @@ resource "aws_subnet" "test_private_subnet_2" {
   availability_zone = "ap-south-1c"
 
    tags = {
-    Name="${aws_vpc.name}_private_subnet_1c"
+    Name="${aws_vpc.test_app.tags["Name"]}_private_subnet_1c"
   }
 }
 #subnet group for database (rds)
@@ -54,7 +54,7 @@ resource "aws_internet_gateway" "test_app_igw" {
   vpc_id = aws_vpc.test_app.id
 
   tags = {
-    Name = "${aws_vpc.name}_test_app_igw"
+    Name = "${aws_vpc.test_app.tags["Name"]}_test_app_igw"
   }
 }
 
@@ -66,7 +66,7 @@ resource "aws_route_table" "test_app_public_rt" {
     gateway_id = aws_internet_gateway.test_app_igw.id
   }
   tags = {
-    Name = "${aws_vpc.name}_test_app_public_rt"
+    Name = "${aws_vpc.test_app.tags["Name"]}_test_app_public_rt"
   }
 }
 
