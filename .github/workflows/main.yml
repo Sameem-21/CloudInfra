@@ -52,6 +52,12 @@ jobs:
          
         if: github.ref == 'refs/heads/main'
         run: terraform apply -auto-approve
+  Connect_EC2:
+      needs: deploy
+      runs-on: self-hosted
+      steps:
+      - name: Connect to EC2
+        uses: ./.github/workflows/EC2Connect.yml
        
 
       

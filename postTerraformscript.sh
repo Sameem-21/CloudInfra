@@ -23,4 +23,5 @@ aws ec2-instance-connect send-ssh-public-key \
 ssh -i "$KEY_PATH" "$USER@$PUBLIC_IP"
 
 
-#
+#echo "Connecting to EC2 for repo: $REPO_NAME"
+ssh -i "$KEY_PATH" "$USER@$PUBLIC_IP"

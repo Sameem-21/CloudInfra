@@ -1,0 +1,20 @@
+name: connect_EC2
+
+on:
+  workflow_call:
+    inputs:
+      repo_name:
+        description: "Repository name to pass into script"
+        required: true
+        type: string
+jobs:
+  connect_ec2:
+    runs-on: Self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3  
+      - name: Connect to EC2 
+        run: |
+          chmod +x ./postTerraformscript.sh
+          ./postTerraformscript.sh ${{ inputs.repo_name }}
+          
