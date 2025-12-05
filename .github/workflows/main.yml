@@ -31,7 +31,9 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2 
       - name: Setup Node.js
-        uses: actions/setup-node@v4   
+        uses: actions/setup-node@v4  
+      - name: Terraform Init
+        run: terraform init --upgrade 
       - name: Terraform Plan
         run: terraform plan
   deploy:
@@ -44,6 +46,8 @@ jobs:
         uses: hashicorp/setup-terraform@v2
       - name: Setup Node.js
         uses: actions/setup-node@v4
+      - name: Terraform Init
+        run: terraform init --upgrade
       - name: Terraform Apply
          
         if: github.ref == 'refs/heads/main'
