@@ -1,13 +1,10 @@
-locals {
-  vpc2 = aws_vpc.test_app.id
-}
 
 resource "aws_security_group" "test_app_sg" {
   name        = "test_app_sg"
   description = "Security group for test application"
   vpc_id      = aws_vpc.test_app.id
   tags = {
-    name = "${local.vpc2}_test_app_sg"
+    name = "${aws_security_group.id}_test_app_sg"
   }
 }
 resource "aws_security_group_rule" "allow_ssh" {
@@ -55,7 +52,7 @@ resource "aws_security_group" "test_db_sg" {
   vpc_id      = aws_vpc.test_app.id
 
   tags = {
-    name = "${local.vpc2}_test_db_sg"
+    name = "${aws_security_group.id}_test_db_sg"
   }
 }
 
