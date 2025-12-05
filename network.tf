@@ -6,7 +6,7 @@ lifecycle {
     create_before_destroy = true
 }
   tags = {
-    Name = "test_app_vpc_${aws_vpc.test_app.id}"
+    Name = "test_app_vpc_${random_id.vpc_suffix.hex}"
   }
 }
 #subnets
