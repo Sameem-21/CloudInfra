@@ -1,3 +1,7 @@
+resource "random_id" "suffix" {
+  byte_length = 2
+}
+
 data "aws_ami" "ubuntu" {
   most_recent = true
 
@@ -47,7 +51,7 @@ resource "aws_instance" "test_app_instance" {
 
 
   tags = {
-    Name = "WebServerInstance_${aws_instance.test_app_instance.id}"
+    Name = "WebServerInstance_${random_id.suffix.hex}"
   }
   depends_on = [aws_security_group.test_app_sg]
 
@@ -62,7 +66,7 @@ resource "aws_instance" "test_db_instance" {
   associate_public_ip_address = false
 
   tags = {
-    Name = "DatabaseInstance_${aws_instance.test_db_instance.id}"
+    Name = "databaseServerInstance_${random_id.suffix.hex}"
   }
   depends_on = [aws_security_group.test_db_sg]
 

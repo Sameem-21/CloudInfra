@@ -1,3 +1,7 @@
+resource "random_id" "db_suffix" {
+  byte_length = 2
+}
+
 
 resource "aws_db_instance" "test_db_instance" {
      identifier         = "test-app-db-instance"
@@ -14,10 +18,9 @@ resource "aws_db_instance" "test_db_instance" {
      vpc_security_group_ids = [aws_security_group.test_db_sg.id]
      #ec2_compatible_mode = true
      
- 
-     tags = {
-         Name = "${aws_db_instance.test_db_instance.id}_test_app_db_instance"
-     }
+ tags = {
+    Name = "test_app_db_instance_${random_id.db_suffix.hex}"
+  }
  }
 
  output "db_endpoint" {
