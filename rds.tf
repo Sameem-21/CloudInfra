@@ -1,3 +1,7 @@
+locals {
+    db_group=aws_db_subnet_group.test_private_subnet_group.name
+}
+
 resource "aws_db_instance" "test_db_instance" {
      identifier         = "test-app-db-instance"
      allocated_storage  = 20
@@ -15,7 +19,7 @@ resource "aws_db_instance" "test_db_instance" {
      
  
      tags = {
-         Name = "test_app_db_instance"
+         Name = "${local.db_group}_test_app_db_instance"
      }
  }
 

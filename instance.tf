@@ -47,7 +47,7 @@ resource "aws_instance" "test_app_instance" {
 
 
   tags = {
-    Name = "WebServerInstance"
+    Name = "WebServerInstance_${aws_instance.test_app_instance.id}"
   }
   depends_on = [aws_security_group.test_app_sg]
 
@@ -62,7 +62,7 @@ resource "aws_instance" "test_db_instance" {
   associate_public_ip_address = false
 
   tags = {
-    Name = "DatabaseInstance"
+    Name = "DatabaseInstance_${aws_instance.test_db_instance.id}"
   }
   depends_on = [aws_security_group.test_db_sg]
 
@@ -71,4 +71,16 @@ resource "aws_instance" "test_db_instance" {
 #outputs
 output "app_instance_id" {
   value = aws_instance.test_app_instance.id
+  
 }   
+output "db_instance_id" {
+  value = aws_instance.test_db_instance.id
+  
+}
+output "app_instance_public_ip" {
+  value = aws_instance.test_app_instance.public_ip
+  
+}
+output "app_instance_az" {
+  value = aws_instance.test_app_instance.availability_zone
+}
