@@ -1,5 +1,7 @@
 
-
+resource "random_id" "vpc_suffix" {
+  byte_length = 4
+}
 resource "aws_vpc" "test_app" {
   cidr_block = "10.0.0.0/16"
 lifecycle {
