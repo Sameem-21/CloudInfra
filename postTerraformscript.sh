@@ -25,3 +25,6 @@ ssh -i "$KEY_PATH" "$USER@$PUBLIC_IP"
 
 #echo "Connecting to EC2 for repo: $REPO_NAME"
 ssh -i "$KEY_PATH" "$USER@$PUBLIC_IP"
+
+#creating a file inside the instance to verify connection
+ssh -i "$KEY_PATH" "$USER@$PUBLIC_IP" "echo 'Connection Successful' > connection_test.txt"            
