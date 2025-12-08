@@ -1,4 +1,4 @@
-name: connect_EC2
+name: Connect_EC2
 
 on:
   workflow_call:
@@ -22,6 +22,8 @@ jobs:
 
       - name: Apply Terraform
         run: terraform apply -auto-approve
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq  
 
       - name: Connect to EC2
         run: |
