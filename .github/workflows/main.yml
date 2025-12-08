@@ -54,7 +54,7 @@ jobs:
         run: terraform apply -auto-approve
   Connect_EC2:
       needs: deploy
-      uses: ./.github/workflows/eC2Connect.yml
+      uses: ./.github/workflows/ec2Connect.yml
       with:
         repo_name: "CloudInfra"
       
