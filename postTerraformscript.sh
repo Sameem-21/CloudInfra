@@ -2,9 +2,10 @@
 set -euo pipefail
 
 # --- Get values from Terraform outputs safely ---
-INSTANCE_ID=$(terraform output -json | jq -r .app_instance_id.value)
-PUBLIC_IP=$(terraform output -json | jq -r .app_instance_public_ip.value)
-AZ=$(terraform output -json | jq -r .app_instance_az.value)
+INSTANCE_ID=$INSTANCE_ID
+PUBLIC_IP=$PUBLIC_IP
+AZ=$AZ
+
 USER="ubuntu"
 
 # --- Validate required values ---

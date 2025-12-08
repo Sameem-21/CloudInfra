@@ -24,6 +24,13 @@ jobs:
         run: terraform apply -auto-approve
       - name: Install jq
         run: sudo apt-get update && sudo apt-get install -y jq  
+      - name: Get Terraform outputs
+        id: tf_outputs
+        run: |
+         echo "INSTANCE_ID=$(terraform output -json | jq -r '.app_instance_id.value')" >> $GITHUB_ENV
+         echo "PUBLIC_IP=$(terraform output -json | jq -r '.app_instance_public_ip.value')" >> $GITHUB_ENV
+         echo "AZ=$(terraform output -json | jq -r '.app_instance_az.value')" >> $GITHUB_ENV
+  
 
       - name: Connect to EC2
         run: |
