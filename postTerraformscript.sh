@@ -33,9 +33,9 @@
 set -euo pipefail
 
 # --- Get values from Terraform outputs ---
-INSTANCE_ID=$(terraform output -raw app_instance_id)
-PUBLIC_IP=$(terraform output -raw app_instance_public_ip)
-AZ=$(terraform output -raw app_instance_az)
+INSTANCE_ID=$(terraform output -raw app_instance_id | tail -n1)
+PUBLIC_IP=$(terraform output -raw app_instance_public_ip | tail -n1)
+AZ=$(terraform output -raw app_instance_az | tail -n1)
 USER="ubuntu"
 
 # --- Validate required values ---
