@@ -9,11 +9,12 @@ on:
         type: string
 
 jobs:
-  connect_ec2:
-    runs-on: self-hosted   # must match the label you registered for your runner
+  deploy:
+    runs-on: self-hosted
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v3
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
@@ -22,17 +23,12 @@ jobs:
 
       - name: Apply Terraform
         run: terraform apply -auto-approve
-      - name: Install jq
-        run: sudo apt-get update && sudo apt-get install -y jq  
-      - name: Get Terraform outputs
-        id: tf_outputs
-        run: |
-         echo "INSTANCE_ID=$(terraform output -json | jq -r '.app_instance_id.value')" >> $GITHUB_ENV
-         echo "PUBLIC_IP=$(terraform output -json | jq -r '.app_instance_public_ip.value')" >> $GITHUB_ENV
-         echo "AZ=$(terraform output -json | jq -r '.app_instance_az.value')" >> $GITHUB_ENV
-  
 
-      - name: Connect to EC2
+      - name: Export Terraform outputs
         run: |
-          chmod +x postTerraformscript.sh
-          ./postTerraformscript.sh "${{ inputs.repo_name }}"
+          echo "INSTANCE_ID=$(terraform output -raw app_instance_id)" >> $GITHUB_ENV
+          echo "PUBLIC_IP=$(terraform output -raw app_instance_public_ip)" >> $GITHUB_ENV
+          echo "AZ=$(terraform output -raw app_instance_az)" >> $GITHUB_ENV
+
+      - name: Run postTerraformscript
+        run: bash postTerraformscript.sh

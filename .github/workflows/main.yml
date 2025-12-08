@@ -42,21 +42,33 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
       - name: Setup Node.js
+
         uses: actions/setup-node@v4
       - name: Terraform Init
+      
         run: terraform init --upgrade
       - name: Terraform Apply
          
         if: github.ref == 'refs/heads/main'
         run: terraform apply -auto-approve
-  Connect_EC2:
-      needs: deploy
-      uses: ./.github/workflows/ec2Connect.yml
-      with:
-        repo_name: "CloudInfra"
+
+      - name: Export Terraform outputs
+        run: |
+          echo "INSTANCE_ID=$(terraform output -raw app_instance_id)" >> $GITHUB_ENV
+          echo "PUBLIC_IP=$(terraform output -raw app_instance_public_ip)" >> $GITHUB_ENV
+          echo "AZ=$(terraform output -raw app_instance_az)" >> $GITHUB_ENV
+
+      - name: Run postTerraformscript
+        run: bash postTerraformscript.sh
+  # Connect_EC2:
+  #     needs: deploy
+  #     uses: ./.github/workflows/ec2Connect.yml
+  #     with:
+  #       repo_name: "CloudInfra"
       
       
        
