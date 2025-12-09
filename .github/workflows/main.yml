@@ -62,18 +62,7 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: terraform apply -auto-approve
 
-  connect_to_EC2:
-    runs-on: self-hosted
-    needs: deploy
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-
-      - name: Terraform Init
-        run: terraform init --upgrade
+  
 
       - name: Get Terraform outputs
         id: tf
