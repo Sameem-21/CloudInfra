@@ -67,9 +67,18 @@ jobs:
       - name: Get Terraform outputs
         # id: tf
         run: |
-          echo "INSTANCE_ID=$(terraform output -raw app_instance_id | tr -d '\n')" >> $GITHUB_ENV
-          echo "PUBLIC_IP=$(terraform output -raw app_instance_public_ip | tr -d '\n')" >> $GITHUB_ENV
-          echo "AZ=$(terraform output -raw app_instance_az | tr -d '\n')" >> $GITHUB_ENV
+          echo "INSTANCE_ID<<EOF" >> $GITHUB_ENV
+          terraform output -raw app_instance_id >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+          echo "PUBLIC_IP<<EOF" >> $GITHUB_ENV
+          terraform output -raw app_instance_public_ip >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+          echo "AZ<<EOF" >> $GITHUB_ENV
+          terraform output -raw app_instance_az >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
 
       - name: Run postTerraformscript
         run: bash postTerraformscript.sh
