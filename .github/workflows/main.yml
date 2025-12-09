@@ -49,21 +49,41 @@ jobs:
 
         uses: actions/setup-node@v4
       - name: Terraform Init
-      
+
         run: terraform init --upgrade
       - name: Terraform Apply
          
         if: github.ref == 'refs/heads/main'
         run: terraform apply -auto-approve
+  connect_to_EC2:
+     runs-on: self-hosted
+     needs: deploy
+     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Export Terraform outputs
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+      - name: Setup Node.js
+
+        uses: actions/setup-node@v4
+      - name: Terraform Init
+        run: terraform init --upgrade
+        
+      - name: Get Terraform outputs
+        id: tf
         run: |
-          echo "INSTANCE_ID=$(terraform output -raw app_instance_id)" >> $GITHUB_ENV
-          echo "PUBLIC_IP=$(terraform output -raw app_instance_public_ip)" >> $GITHUB_ENV
-          echo "AZ=$(terraform output -raw app_instance_az)" >> $GITHUB_ENV
+          echo "INSTANCE_ID=$(terraform output -raw app_instance_id)" >> $GITHUB_OUTPUT
+          echo "PUBLIC_IP=$(terraform output -raw app_instance_public_ip)" >> $GITHUB_OUTPUT
+          echo "AZ=$(terraform output -raw app_instance_az)" >> $GITHUB_OUTPUT
 
       - name: Run postTerraformscript
         run: bash postTerraformscript.sh
+        env:
+         INSTANCE_ID: ${{ steps.tf.outputs.INSTANCE_ID }}
+         PUBLIC_IP: ${{ steps.tf.outputs.PUBLIC_IP }}
+         AZ: ${{ steps.tf.outputs.AZ }}
+
   # Connect_EC2:
   #     needs: deploy
   #     uses: ./.github/workflows/ec2Connect.yml
