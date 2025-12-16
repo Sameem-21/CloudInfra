@@ -34,6 +34,8 @@ jobs:
 
       - name: Terraform Init
         run: terraform init --upgrade
+      - name: backedn setup
+        run: terraform init --backend-config="bucket=tf_state_backup" --backend-config="key=terraform.tfstate" --backend-config="region=ap-south-1" 
 
   test:
     runs-on: self-hosted
@@ -53,6 +55,8 @@ jobs:
 
       - name: Terraform Plan
         run: terraform plan
+      - name: backedn setup
+        run: terraform init --backend-config="bucket=tf_state_backup" --backend-config="key=terraform.tfstate" --backend-config="region=ap-south-1"
 
   deploy:
     runs-on: self-hosted
@@ -73,6 +77,8 @@ jobs:
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
         run: terraform apply -auto-approve
+      - name: backedn setup
+        run: terraform init --backend-config="bucket=tf_state_backup" --backend-config="key=terraform.tfstate" --backend-config="region=ap-south-1"
 
   
 
