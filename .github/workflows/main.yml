@@ -25,7 +25,7 @@ jobs:
 
   build:
     runs-on: self-hosted
-    #needs: S3_Creation
+    needs: S3_Creation
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
