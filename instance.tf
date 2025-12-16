@@ -107,5 +107,5 @@ output "app_instance_az" {
   value = aws_instance.test_app_instance.availability_zone
 }
 output "s3_bucket_name" {
-  value = aws_s3_bucket.tf_state.bucket.tags["Name"]
+  value = aws_s3_bucket.tf_state.bucket
 }
