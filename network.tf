@@ -8,7 +8,8 @@ lifecycle {
     create_before_destroy = true
 }
   tags = {
-    Name = "test_app_vpc_${random_id.vpc_suffix.hex}"
+    Name = "test_app_vpc"
+    #_${random_id.vpc_suffix.hex}
   }
 }
 #subnets
