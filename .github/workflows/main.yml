@@ -6,20 +6,20 @@ on:
   workflow_dispatch:
 
 jobs:
-  S3_Creation:
-    runs-on: self-hosted
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: terraform initialization
-        uses: hashicorp/setup-terraform@v2
-      - name: Create S3 bucket for terraform state
-        run: |
-          terraform init
-          terraform apply -auto-approve -target=aws_s3_bucket.tf_state
+  # S3_Creation:
+  #   runs-on: self-hosted
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
+  #     - name: terraform initialization
+  #       uses: hashicorp/setup-terraform@v2
+  #     - name: Create S3 bucket for terraform state
+  #       run: |
+  #         terraform init
+  #         terraform apply -auto-approve -target=aws_s3_bucket.tf_state
   build:
     runs-on: self-hosted
-    needs: S3_Creation
+    #needs: S3_Creation
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
