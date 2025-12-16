@@ -83,12 +83,12 @@ terraform {
 
 #outputs
 output "app_instance_name" {
-  value = aws_instance.test_app_instance.name
+  value = aws_instance.test_app_instance.tags["Name"]
   
 }
 
 output "db_instance_name" {
-  value = aws_instance.test_db_instance.name
+  value = aws_instance.test_db_instance.tags["Name"]
   
 }
 output "app_instance_id" {
