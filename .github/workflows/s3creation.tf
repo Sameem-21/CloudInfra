@@ -26,7 +26,7 @@ resource "aws_iam_instance_profile" "sam_ec2_instance_profile_1" {
 
 # S3 bucket for state
 resource "aws_s3_bucket" "tf_state" {
-  bucket = "tf_state_backup"
+  bucket = "tf-state-backup-ec2"
   region = "ap-south-1"
 }
 

@@ -74,7 +74,7 @@ resource "aws_instance" "test_db_instance" {
 }
 terraform {
   backend "s3" {
-    bucket         = "tf_state_backup"
+    bucket         = "tf-state-backup-ec2"
     key            = "terraform.tfstate"
     region         = "ap-south-1"
     encrypt        = true
@@ -105,4 +105,7 @@ output "app_instance_public_ip" {
 }
 output "app_instance_az" {
   value = aws_instance.test_app_instance.availability_zone
+}
+output "s3_bucket_name" {
+  value = aws_s3_bucket.tf_state.bucket.tags["Name"]
 }

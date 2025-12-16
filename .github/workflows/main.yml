@@ -6,26 +6,26 @@ on:
   workflow_dispatch:
 
 jobs:
-  S3_Creation:
-    runs-on: self-hosted
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: terraform initialization
-        uses: hashicorp/setup-terraform@v2
-      - name: Create S3 bucket for terraform state
-        run: |
-          terraform init
-          terraform apply -auto-approve -target=aws_iam_role.sam_ec2_role_2
-          terraform apply -auto-approve -target=aws_iam_role_policy_attachment.sam_ec2_policy_attachment
-          terraform apply -auto-approve -target=aws_iam_instance_profile.sam_ec2_instance_profile_1
-          terraform apply -auto-approve -target=aws_s3_bucket.tf_state
-          terraform apply -auto-approve -target=aws_s3_bucket_versioning.tf_state_versioning
-          terraform apply -auto-approve -target=aws_s3_bucket_server_side_encryption_configuration.tf_state_encryption
+  # S3_Creation:
+  #   runs-on: self-hosted
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
+  #     - name: terraform initialization
+  #       uses: hashicorp/setup-terraform@v2
+  #     - name: Create S3 bucket for terraform state
+  #       run: |
+  #         terraform init
+  #         terraform apply -auto-approve -target=aws_iam_role.sam_ec2_role_2
+  #         terraform apply -auto-approve -target=aws_iam_role_policy_attachment.sam_ec2_policy_attachment
+  #         terraform apply -auto-approve -target=aws_iam_instance_profile.sam_ec2_instance_profile_1
+  #         terraform apply -auto-approve -target=aws_s3_bucket.tf_state
+  #         terraform apply -auto-approve -target=aws_s3_bucket_versioning.tf_state_versioning
+  #         terraform apply -auto-approve -target=aws_s3_bucket_server_side_encryption_configuration.tf_state_encryption
 
   build:
     runs-on: self-hosted
-    needs: S3_Creation
+    #needs: S3_Creation
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
