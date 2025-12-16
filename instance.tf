@@ -106,6 +106,6 @@ output "app_instance_public_ip" {
 output "app_instance_az" {
   value = aws_instance.test_app_instance.availability_zone
 }
-output "s3_bucket_name" {
-  value = aws_s3_bucket.tf_state.bucket
-}
+# output "s3_bucket_name" {
+#   value = aws_s3_bucket.tf_state
+# }
