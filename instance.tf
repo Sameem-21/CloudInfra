@@ -72,6 +72,14 @@ resource "aws_instance" "test_db_instance" {
   depends_on = [aws_security_group.test_db_sg]
 
 }
+terraform {
+  backend "s3" {
+    bucket         = "tf_state_backup"
+    key            = "terraform.tfstate"
+    region         = "ap-south-1"
+    encrypt        = true
+  }
+}
 
 #outputs
 output "app_instance_name" {
