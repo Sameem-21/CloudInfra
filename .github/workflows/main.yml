@@ -39,7 +39,7 @@ jobs:
           node-version: '18'
 
       - name: Terraform Init
-        run: terraform init --upgrade
+        run: terraform init -migrate-state -force-copy
       - name: backedn setup
         run: terraform init --backend-config="bucket=tf_state_backup" --backend-config="key=terraform.tfstate" --backend-config="region=ap-south-1" 
 
@@ -57,7 +57,7 @@ jobs:
         uses: actions/setup-node@v4
 
       - name: Terraform Init
-        run: terraform init --upgrade
+        run: terraform init -migrate-state -force-copy
 
       - name: Terraform Plan
         run: terraform plan
@@ -78,7 +78,7 @@ jobs:
         uses: actions/setup-node@v4
 
       - name: Terraform Init
-        run: terraform init --upgrade
+        run: terraform init -migrate-state -force-copy
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
