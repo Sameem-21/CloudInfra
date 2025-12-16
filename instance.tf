@@ -73,8 +73,6 @@ resource "aws_instance" "test_db_instance" {
 
 }
 
-
-
 #outputs
 output "app_instance_name" {
   value = aws_instance.test_app_instance.tags["Name"]
