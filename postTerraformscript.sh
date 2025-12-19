@@ -1,9 +1,10 @@
 #!/bin/bash
 set -euo pipefail
 
-INSTANCE_ID=${INSTANCE_ID:-}
-PUBLIC_IP=${PUBLIC_IP:-}
-AZ=${AZ:-}
+# These are already set in $GITHUB_ENV by the previous step
+INSTANCE_ID="${INSTANCE_ID}"
+PUBLIC_IP="${PUBLIC_IP}"
+AZ="${AZ}"
 USER="ubuntu"
 
 echo "📋 Terraform outputs:"
