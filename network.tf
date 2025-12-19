@@ -2,13 +2,14 @@
 
 resource "aws_vpc" "test_app" {
   cidr_block = "10.0.0.0/16"
-lifecycle {
-    create_before_destroy = true
-}
+
   tags = {
     Name = "test_app_vpc"
     #_${random_id.vpc_suffix.hex}
   }
+  lifecycle {
+    create_before_destroy = true
+}
 }
 #subnets
 #public subnet for application
@@ -49,6 +50,9 @@ resource "aws_db_subnet_group" "test_private_subnet_group" {
     create_before_destroy = true
   }
   subnet_ids = [aws_subnet.test_private_subnet.id, aws_subnet.test_private_subnet_2.id]
+  tags={
+    Name = "test_app_db_subnet_group"
+  }
 }
 
 resource "aws_internet_gateway" "test_app_igw" {

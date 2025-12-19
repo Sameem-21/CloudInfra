@@ -55,7 +55,9 @@ resource "aws_instance" "test_app_instance" {
     Name = "WebServerInstance_${random_id.suffix.hex}"
   }
   depends_on = [aws_security_group.test_app_sg]
-
+  lifecycle {
+    create_before_destroy = true
+}
 }
 
 resource "aws_instance" "test_db_instance" {
@@ -70,7 +72,9 @@ resource "aws_instance" "test_db_instance" {
     Name = "databaseServerInstance_${random_id.suffix.hex}"
   }
   depends_on = [aws_security_group.test_db_sg]
-
+   lifecycle {
+    create_before_destroy = true
+}
 }
 terraform {
   backend "s3" {
