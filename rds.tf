@@ -21,6 +21,9 @@ resource "aws_db_instance" "test_db_instance" {
  tags = {
     Name = "test_app_db_instance_${random_id.db_suffix.hex}"
   }
+  lifecycle {
+    create_before_destroy = true
+}
  }
 
  output "db_endpoint" {

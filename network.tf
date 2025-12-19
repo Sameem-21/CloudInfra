@@ -4,7 +4,7 @@ resource "aws_vpc" "test_app" {
   cidr_block = "10.0.0.0/16"
 
   tags = {
-    Name = "test_app_vpc"
+    Name = "test_app_vpc-${terraform_workspace}"
     #_${random_id.vpc_suffix.hex}
   }
   lifecycle {
